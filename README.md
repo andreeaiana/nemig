@@ -69,6 +69,8 @@ conda activate myenv
 pip install -r requirements.txt
 ```
 
+Download the mGENRE model as described in [mGENRE](https://github.com/facebookresearch/GENRE/tree/main/examples_mgenre) needed for running the entity linking model.
+
 Run pipeline with default configuration
 
 ```bash
