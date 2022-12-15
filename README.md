@@ -45,7 +45,7 @@ The directory structure of new project looks like this:
 │   ├── sentiment_classification           <- Sentiment classification model
 │   ├── utils                              <- Utility scripts
 │   │
-│   └── pipeine.py                 <- Run pipeline
+│   └── pipeline.py                 <- Run pipeline
 │
 ├── .gitignore                <- List of files ignored by git
 ├── requirements.txt          <- File for installing python dependencies
