@@ -101,8 +101,10 @@ The anonymized user data and the associated subset of the German corpora are ava
 
 A full version of the news corpus is available [upon request](mailto:andreea.iana@uni-mannheim.de).
 
-## Results
+## KG Triples
 [NeMigKG](https://doi.org/10.5281/zenodo.7442425) is hosted on [Zenodo](https://zenodo.org/). All files are [gzipped](https://www.gzip.org/) and in [N-Triples format](https://www.w3.org/TR/n-triples/). 
+
+A sample of the triple files for the **complete NeMig** can be found in the [kg folder](data/kg/). Due to copyright policies, this samples does not contain the body of the news articles.
 
 
 ## License
