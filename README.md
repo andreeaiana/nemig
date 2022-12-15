@@ -95,6 +95,8 @@ The chosen version of NeMig will be constructed and cached in the [cache folder]
 ## Data
 A sample of the annotated news corpora used to construct the knowledge graphs are available in the [cache folder](data/cache). Due to copyright policies, this sample does not contain the body of the articles.
 
+The anonymized user data and the associated subset of the German corpora are available in the [news-recommendation folder](data/news_recommendation/).
+
 A full version of the news corpus is available [upon request](mailto:andreea.iana@uni-mannheim.de).
 
 ## Results
