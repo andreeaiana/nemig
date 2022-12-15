@@ -1,0 +1,101 @@
+_target_: src.kg_construction.news_kg.NewsKG
+
+# Namespaces
+namespaces:
+  base: 'http://nemig_${language}.org/'
+  custom_property: 'http://nemig_${language}.org/property/'
+  custom_resource: 'http://nemig_${language}.org/resource/'
+  wikidata_resource: 'https://www.wikidata.org/wiki/'
+  wikidata_property: 'https://www.wikidata.org/wiki/Property:'
+
+# Relations and classes
+predicates:
+  url: 'https://schema.org/url'
+  publisher: 'https://schema.org/publisher'
+  date_published: 'https://schema.org/datePublished'
+  date_modified: 'https://schema.org/dateModified'
+  author: 'https://schema.org/author'
+  has_part: 'https://schema.org/hasPart'
+  headline: 'https://schema.org/headline'
+  abstract:  'https://schema.org/abstract'
+  article_body: 'https://schema.org/articleBody'
+  keywords: 'https://schema.org/keywords'
+  is_based_on: 'https://schema.org/isBasedOn'
+  about: 'https://schema.org/about'
+  mentions: 'https://schema.org/mentions'
+  subject: 'http://purl.org/dc/elements/1.1/subject'
+  has_place: 'https://semanticweb.cs.vu.nl/2009/11/sem/hasPlace'
+  has_actor: 'https://semanticweb.cs.vu.nl/2009/11/sem/hasActor'
+  is_referenced_by: 'http://purl.org/dc/terms/isReferencedBy'
+  sentiment: 'http://nemig_${language}.org/property/sentiment'
+  political_orientation: 'http://nemig_${language}.org/property/political_orientation'
+  type: 'https://www.w3.org/1999/02/22-rdf-syntax-ns#type'
+  label: 'http://www.w3.org/2000/01/rdf-schema#label'
+
+classes:
+  news_article: 'https://schema.org/NewsArticle'
+  event: 'https://semanticweb.cs.vu.nl/2009/11/sem/Event'
+
+# Graph
+overwrite_cache: False
+graph_type: 'base' # base, entities, enriched_entities, complete
+min_unlinked_resource_freq: 2
+min_sink_entities_freq: 2
+related_news_threshold: 0.3
+k_hop: 2
+attributes:
+  label: 'label'
+
+node_prefix:
+  news: 'news_'
+  news_event: 'news_evt_'
+  news_title: 'news_title_'
+  news_abstract: 'news_abstract_'
+  news_body: 'news_body_'
+  news_topic: 'news_topic_'
+
+data2include:
+  id: ${dataset.id_col}
+  publisher: ${dataset.news_outlet_col}
+  url: ${dataset.provenance_col}
+  author: ${dataset.author_col}
+  author_org: ${dataset.author_org_col}
+  date_published: ${dataset.creation_date_col}
+  date_modified: ${dataset.last_modified_col}
+  keywords: ${dataset.keywords_col}
+  title: ${dataset.title_col}
+  abstract: ${dataset.description_col}
+  body: ${dataset.body_col}
+  sentiment: ${sentiment_classification.sentiment_label_col}
+  political_orientation: 'political_orientation'
+  topic: 'topic'
+  topic_label: ${named_entity_recognition.columns2extract.topic_label} 
+
+# Input files
+input_files:
+  general: ${dataset.data_processed_file}
+  disambiguated_publisher: ${cache_dir}/${language}/disambiguated_publishers.csv
+  political_orientation: ${cache_dir}/${language}/political_orientation_annotations.csv
+  title_entities: ${cache_dir}/${language}/filtered_${dataset.title_col}_annotations.csv
+  abstract_entities: ${cache_dir}/${language}/filtered_${dataset.description_col}_annotations.csv
+  body_entities: ${cache_dir}/${language}/filtered_${dataset.body_col}_annotations.csv
+  keywords: ${cache_dir}/${language}/filtered_${dataset.keywords_col}_annotations.csv
+  author: ${cache_dir}/${language}/filtered_${dataset.author_col}_annotations.csv
+  author_org: ${cache_dir}/${language}/filtered_${dataset.author_org_col}_annotations.csv
+  sentiment: ${cache_dir}/${language}/sentiment_annotations.csv
+  topic: ${cache_dir}/${language}/filtered_subtopic_annotations.csv
+  topic_label: ${cache_dir}/${language}/filtered_subtopic_annotations.csv
+  
+# Auxiliary files
+cache_files:
+  graph:
+    base: ${cache_dir}/${language}/nemig_base.pickle
+    entities: ${cache_dir}/${language}/nemig_entities.pickle
+    enriched_entities: ${cache_dir}/${language}/nemig_enriched_entities.pickle
+    complete: ${cache_dir}/${language}/nemig_complete.pickle
+  wikidata:
+    qid2attr_map: ${entity_filtering.qid2attr_filepath}
+    neighbors_map: ${cache_dir}/${language}/wiki_neighbors_map.pickle
+    hop_neighbors_list:
+      1: ${cache_dir}/${language}/wiki_1_hop_neighbors_list.pickle
+      2: ${cache_dir}/${language}/wiki_2_hop_neighbors_list.pickle

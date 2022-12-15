@@ -1,0 +1,42 @@
+_target_: src.named_entity_linking.model.NELModel
+
+overwrite_cache: False
+
+# Model parameters
+pretrained_model_path: ${data_dir}/mgenre/hf_multilingual_entity_disambiguation/
+lang_title2wikidataID_path: ${data_dir}/mgenre/lang_title2wikidataID-normalized_with_redirect.pkl
+trie_path: ${data_dir}/mgenre/titles_lang_all105_trie_with_redirect.pkl
+batch_size: 5
+
+columns2link: 
+  title: ${dataset.title_col}
+  description: ${dataset.description_col}
+  body: ${dataset.body_col}
+  keywords: ${dataset.keywords_col}
+  author: ${dataset.author_col}
+  author_org: ${dataset.author_org_col}
+  topic_label: ${named_entity_recognition.columns2extract.topic_label}
+columns_single_entities: 
+    - keywords 
+    - author
+    - author_org
+    - topic_label
+
+# Processed data
+input_data_files:  
+  title: ${cache_dir}/${language}/ner_${dataset.title_col}_annotations.csv
+  description: ${cache_dir}/${language}/ner_${dataset.description_col}_annotations.csv
+  body: ${cache_dir}/${language}/ner_${dataset.body_col}_annotations.csv
+  keywords: ${cache_dir}/${language}/ner_${dataset.keywords_col}_annotations.csv
+  author: ${cache_dir}/${language}/ner_${dataset.author_col}_annotations.csv
+  author_org: ${cache_dir}/${language}/ner_${dataset.author_org_col}_annotations.csv
+  topic_label: ${cache_dir}/${language}/ner_subtopic_annotations.csv
+
+results_files: 
+  title: ${cache_dir}/${language}/nel_${dataset.title_col}_annotations.csv
+  description: ${cache_dir}/${language}/nel_${dataset.description_col}_annotations.csv
+  body: ${cache_dir}/${language}/nel_${dataset.body_col}_annotations.csv
+  keywords: ${cache_dir}/${language}/nel_${dataset.keywords_col}_annotations.csv
+  author: ${cache_dir}/${language}/nel_${dataset.author_col}_annotations.csv
+  author_org: ${cache_dir}/${language}/nel_${dataset.author_org_col}_annotations.csv
+  topic_label: ${cache_dir}/${language}/nel_subtopic_annotations.csv

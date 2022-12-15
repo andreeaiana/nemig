@@ -1,0 +1,47 @@
+_target_: src.dataset.dataset.NewsDataset
+
+language: ${language}
+
+overwrite_cache: False
+
+# Files and directories
+raw_dataset_dir: ${raw_data_dir}/${language}/
+data_raw_file: ${cache_dir}/${language}/corpus_raw.csv
+data_processed_file: ${cache_dir}/${language}/corpus_processed.csv
+
+# Column names in the raw and pre-processed dataframe
+# Initial
+id_col: 'id'
+news_outlet_col: 'news_outlet'
+provenance_col: 'provenance'
+author_col: 'author_person'
+author_org_col: 'author_organization'
+creation_date_col: 'creation_date'
+last_modified_col: 'last_modified'
+keywords_col: 'news_keywords'
+content_col: 'content'
+title_col: 'title'
+description_col: 'description'
+body_col: 'body'
+source_filename_col: 'filename'
+
+# Pre-processing
+formatted_content_col: 'formatted_content'
+language_col: 'language'
+article_length_col: 'article_length'
+number_subheaders_col: 'number_subheaders'
+contains_forbidden_patterns_col: 'forbidden_pattern'
+
+# Pre-processing variables
+bool_drop_duplicates: True
+bool_drop_foreign_articles: True
+bool_drop_outliers: True
+bool_drop_news_tickers: True
+bool_drop_articles_with_pattern: True
+
+# Pre-processing constants
+pattern_list: []
+author_sep_signs: []
+subheader_threshold: 10
+max_words: 1000
+scale_factor_outlier: 1.5

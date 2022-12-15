@@ -1,0 +1,95 @@
+_target_: src.entity_filtering.model.EntityFilter
+
+language: ${language}
+overwrite_cache: False
+
+# Thresholds for entity recoginition and linking models
+threshold_ner_score: 0.95
+threshold_nel_score_text: -0.5
+threshold_nel_score_keywords: -0.5
+
+# Lists of keywords to determine authors based on Wikidata description and properties
+author_person_description: null
+author_person_occupation:
+  - Q1930187 # journalist
+  - Q482980 # author
+  - Q36180 # writer
+  - Q6625963 # novelist
+  - Q8246794 # blogger
+  - Q11774202 # essayist
+  - Q82955 # politician
+  - Q15973695 # political journalist
+author_org_description: null
+author_org_instanceof: 
+    - Q11032 # newspaper
+    - Q1110794 # daily newspaper
+    - Q1153191 # online newspaper
+    - Q35127 # website
+    - Q192283 # news agency
+    - Q43229 # organization
+
+# Properties characteristic of different entity types
+wiki_prop4ent_type:
+  PER:
+    - P31 # instance of (Q5 -> human)
+  ORG:
+    - P159 # headquarters location
+    - P112 # founded by
+    - P571 # inception
+  LOC:
+    - P625 # coordinate location
+
+# Columns for which the entites should be filtered
+columns2filter:
+  - title
+  - description
+  - body
+  - keywords
+  - author
+  - author_org
+  - topic_label
+
+text_columns:
+  - title
+  - description
+  - body
+
+author_columns:
+  - author
+  - author_org
+
+keywords_columns:
+  - keywords
+  - topic_label
+
+# Input data
+input_data_files:  
+  title: ${cache_dir}/${language}/nel_${dataset.title_col}_annotations.csv
+  description: ${cache_dir}/${language}/nel_${dataset.description_col}_annotations.csv
+  body: ${cache_dir}/${language}/nel_${dataset.body_col}_annotations.csv
+  keywords: ${cache_dir}/${language}/nel_${dataset.keywords_col}_annotations.csv
+  author: ${cache_dir}/${language}/nel_${dataset.author_col}_annotations.csv
+  author_org: ${cache_dir}/${language}/nel_${dataset.author_org_col}_annotations.csv
+  topic_label: ${cache_dir}/${language}/nel_subtopic_annotations.csv
+
+# Filtered data
+results_files:
+  filtered:
+    title: ${cache_dir}/${language}/filtered_${dataset.title_col}_annotations.csv
+    description: ${cache_dir}/${language}/filtered_${dataset.description_col}_annotations.csv
+    body: ${cache_dir}/${language}/filtered_${dataset.body_col}_annotations.csv
+    keywords: ${cache_dir}/${language}/filtered_${dataset.keywords_col}_annotations.csv
+    author: ${cache_dir}/${language}/filtered_${dataset.author_col}_annotations.csv
+    author_org: ${cache_dir}/${language}/filtered_${dataset.author_org_col}_annotations.csv
+    topic_label: ${cache_dir}/${language}/filtered_subtopic_annotations.csv
+  removed:
+    title: ${cache_dir}/${language}/removed_${dataset.title_col}_annotations.csv
+    description: ${cache_dir}/${language}/removed_${dataset.description_col}_annotations.csv
+    body: ${cache_dir}/${language}/removed_${dataset.body_col}_annotations.csv
+    keywords: ${cache_dir}/${language}/removed_${dataset.keywords_col}_annotations.csv
+    author: ${cache_dir}/${language}/removed_${dataset.author_col}_annotations.csv
+    author_org: ${cache_dir}/${language}/removed_${dataset.author_org_col}_annotations.csv
+    topic_label: ${cache_dir}/${language}/removed_subtopic_annotations.csv
+
+# Auxiliary files
+qid2attr_filepath: ${cache_dir}/${language}/qid2attr.pickle

@@ -1,0 +1,59 @@
+# @package _global_
+
+# specify here default configurations
+defaults:
+  - _self_
+  - dataset: default.yaml
+  - sentiment_classification: default.yaml
+  - named_entity_recognition: default.yaml
+  - named_entity_linking: default.yaml
+  - entity_filtering: default.yaml
+  - kg_construction: default.yaml
+  - kg_serialization: default.yaml
+  - hydra: default.yaml
+  
+  # experiment configs allow for version control of specific configurations
+  - experiment: null
+
+# path to original working directory
+# hydra hijacks working directory by changing it to the new log directory
+# https://hydra.cc/docs/next/tutorials/basic/running_your_app/working_directory
+work_dir: ${hydra:runtime.cwd}
+
+# path to data directory
+data_dir: ${work_dir}/data
+
+# path to raw data directory
+raw_data_dir: ${data_dir}/raw
+
+# path to cached data directory
+cache_dir: ${data_dir}/cache
+
+# path to cached data directory
+kg_dir: ${data_dir}/kg
+
+# path to logging directory
+log_dir: ${work_dir}/logs/${language}/${name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+
+# pretty print config at the start of the run using Rich library
+print_config: True
+
+# disable python warnings if they annoy you
+ignore_warnings: True
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: 42
+
+# the language of the dataset
+language: null
+
+# whether to run the pipeline
+run: True
+
+# default name for the experiment, determines logging folder path
+# (you can overwrite this name in experiment configs)
+name: default
+
+version: '0.0.1'
+
+creation_date: '29.11.2022'

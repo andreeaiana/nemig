@@ -1,0 +1,36 @@
+_target_: src.named_entity_recognition.model.NERModel
+
+language: ${language}
+
+overwrite_cache: False
+
+# Model parameters
+columns2extract: 
+  title: ${dataset.title_col}
+  description: ${dataset.description_col}
+  body: ${dataset.body_col}
+  keywords: ${dataset.keywords_col}
+  author: ${dataset.author_col}
+  author_org: ${dataset.author_org_col}
+  topic_label: 'topic_label'
+columns2sentencize: 
+  - body
+columns_list_feat: 
+  - keywords   
+  - author 
+  - author_org
+  - topic_label
+
+pretrained_model_path: null
+batch_size: 128
+aggregation_strategy: 'simple'
+
+# Processed data
+results_files:  
+  title: ${cache_dir}/${language}/ner_${dataset.title_col}_annotations.csv
+  description: ${cache_dir}/${language}/ner_${dataset.description_col}_annotations.csv
+  body: ${cache_dir}/${language}/ner_${dataset.body_col}_annotations.csv
+  keywords: ${cache_dir}/${language}/ner_${dataset.keywords_col}_annotations.csv
+  author: ${cache_dir}/${language}/ner_${dataset.author_col}_annotations.csv
+  author_org: ${cache_dir}/${language}/ner_${dataset.author_org_col}_annotations.csv
+  topic_label: ${cache_dir}/${language}/ner_subtopic_annotations.csv

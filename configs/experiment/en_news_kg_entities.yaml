@@ -1,0 +1,71 @@
+# @package _global_
+
+# to execute this experiment run:
+# python main.py experiment=en_news_kg_entities
+
+defaults:
+  - override /dataset: en_corpus.yaml
+  - override /sentiment_classification: default.yaml
+  - override /named_entity_recognition: en_ner.yaml
+  - override /named_entity_linking: default.yaml
+  - override /entity_filtering: default.yaml
+  - override /kg_construction: default.yaml
+  - override /kg_serialization: default.yaml
+  - override /hydra: default.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+language: "en" 
+
+# name of the run determines folder name in logs
+name: "en_news_kg_entities"
+
+entity_filtering:
+  author_person_description:
+    - author
+    - writer
+    - columnist
+    - novelist
+    - reporter
+    - journalist
+    - blogger
+    - American politician
+    - American political
+  author_org_description:
+    - newspaper
+    - news organization
+    - news website
+    - magazine
+    - blog
+    - news agency
+    - news channel
+
+kg_construction:
+  graph_type: 'entities'
+
+kg_serialization:
+  description: 'The NeMigKG_en_entities is a knowledge graph built using an English news dataset collected from 45 media outlets, containing only entities and no literals.'
+  triples_to_serialize:  
+    - metadata
+    - instances_labels
+    - instances_related
+    - instances_content_mapping
+    - instances_topic_mapping
+    - instances_metadata_resources
+    - instances_event_mapping
+    - instances_event_resources
+    - instances_resources_provenance
+
+  # Triple files
+  triples_files:
+      metadata: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-metadata.nt.bz2 # void description
+      instances_labels: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_labels.nt.bz2 # labels of instances
+      instances_related: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_related.nt.bz2 # news based on one another
+      instances_content_mapping: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_content_mapping.nt.bz2 # mapping of news article resources to nodes representing titles, abstracts, and article bodies
+      instances_topic_mapping: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_subtopic_mapping.nt.bz2 # mapping of news article resources to nodes representing subtopics
+      instances_metadata_resources: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_metadata_resources.nt.bz2 # instances metadata resources relations (e.g. publisher, author, keywords)
+      instances_event_mapping: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_event_mapping.nt.bz2 # mapping of news article resources to events
+      instances_event_resources: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-event_resources.nt.bz2 # event relations (actors, places, mentions)
+      instances_resources_provenance: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-resources_provenance.nt.bz2 # provenance of resources relations (title, abstract, article body)
+

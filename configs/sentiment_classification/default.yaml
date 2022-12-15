@@ -1,0 +1,14 @@
+_target_: src.sentiment_classification.model.SentimentClassificationModel
+
+overwrite_cache: False
+
+# Model parameters
+pretrained_model_path: "cardiffnlp/twitter-xlm-roberta-base-sentiment"
+padding: True
+truncation: True
+max_length: 512
+batch_size: 128
+
+# Processed data
+sentiment_label_col: 'sentiment_label'
+results_file: ${cache_dir}/${language}/sentiment_annotations.csv

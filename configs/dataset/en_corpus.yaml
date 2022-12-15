@@ -1,0 +1,6 @@
+defaults:
+  - default.yaml
+
+bool_drop_articles_with_pattern: False
+pattern_list: []
+author_sep_signs: ["/", ", ", " and "]

@@ -1,0 +1,4 @@
+defaults:
+  - default.yaml
+
+pretrained_model_path: "xlm-roberta-large-finetuned-conll03-english"

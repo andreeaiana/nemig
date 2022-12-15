@@ -1,0 +1,6 @@
+defaults:
+  - default.yaml
+    
+bool_drop_articles_with_pattern: True
+pattern_list: ['Die Woche COMPACT \(Video\)', 'Dieser Beitrag ist gesperrt und nur für Onlineabonnenten lesbar.', 'Leserbrief']
+author_sep_signs: ["/", ", ", " und "]
