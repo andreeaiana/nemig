@@ -54,6 +54,6 @@ run: True
 # (you can overwrite this name in experiment configs)
 name: default
 
-version: '0.0.1'
+version: '0.0.2'
 
-creation_date: '29.11.2022'
+creation_date: '26.04.2023'

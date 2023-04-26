@@ -52,6 +52,8 @@ kg_serialization:
     - instances_related
     - instances_content_mapping
     - instances_topic_mapping
+    - instances_sentiment_mapping
+    - instances_political_orientation_mapping
     - instances_metadata_resources
     - instances_event_mapping
     - instances_event_resources
@@ -64,6 +66,8 @@ kg_serialization:
       instances_related: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_related.nt.bz2 # news based on one another
       instances_content_mapping: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_content_mapping.nt.bz2 # mapping of news article resources to nodes representing titles, abstracts, and article bodies
       instances_topic_mapping: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_subtopic_mapping.nt.bz2 # mapping of news article resources to nodes representing subtopics
+      instances_sentiment_mapping: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_sentiment_mapping.nt.bz2 # mapping of news article resources to nodes representing sentiment classes
+      instances_political_orientation_mapping: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_political_orientation_mapping.nt.bz2 # mapping of news outlets resources to nodes representing political orientation classes
       instances_metadata_resources: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_metadata_resources.nt.bz2 # instances metadata resources relations (e.g. publisher, author, keywords)
       instances_event_mapping: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-instances_event_mapping.nt.bz2 # mapping of news article resources to events
       instances_event_resources: ${kg_dir}/${language}/nemig_${language}_${kg_construction.graph_type}-event_resources.nt.bz2 # event relations (actors, places, mentions)

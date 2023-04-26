@@ -1,7 +1,6 @@
 from typing import Set, List, Dict, Tuple
 
 import networkx as nx
-import numpy as np
 import pandas as pd
 import networkx as nx
 from tqdm import tqdm
@@ -113,8 +112,10 @@ class NewsKG(BaseGraph):
         content_nodes = set(self.get_content_nodes())
         event_nodes = set(self.get_event_nodes())
         topic_nodes = set(self.get_topic_nodes())
+        sentiment_nodes = set(self.get_sentiment_nodes())
+        pol_orient_nodes = set(self.get_pol_orient_nodes())
 
-        other_nodes = news_nodes.union(content_nodes).union(event_nodes).union(topic_nodes)
+        other_nodes = news_nodes.union(content_nodes).union(event_nodes).union(topic_nodes).union(sentiment_nodes).union(pol_orient_nodes)
         return resource_nodes.difference(other_nodes)
 
     def get_news_nodes(self) -> List[str]:
@@ -123,8 +124,11 @@ class NewsKG(BaseGraph):
         content_nodes = set(self.get_content_nodes())
         event_nodes = set(self.get_event_nodes())
         topic_nodes = set(self.get_topic_nodes())
+        sentiment_nodes = set(self.get_sentiment_nodes())
+        pol_orient_nodes = set(self.get_pol_orient_nodes())
         
-        news_nodes = set(blank_nodes).difference(content_nodes).difference(event_nodes).difference(content_nodes).difference(topic_nodes)
+        news_nodes = set(blank_nodes).difference(content_nodes).difference(event_nodes).difference(
+                content_nodes).difference(topic_nodes).difference(sentiment_nodes).difference(pol_orient_nodes)
         return list(news_nodes)
 
     def get_event_nodes(self) -> List[str]:
@@ -149,6 +153,16 @@ class NewsKG(BaseGraph):
             content_nodes = [node for node in self.get_custom_resources() if content_part in node]
 
         return content_nodes
+    
+    def get_sentiment_nodes(self) -> List[str]:
+        """ Returns the ids of all nodes representing a resource corresponding to a sentiment class. """
+        sentiment_nodes = [node for node in self.get_custom_resources() if '_sentiment_' in node]
+        return sentiment_nodes
+    
+    def get_pol_orient_nodes(self) -> List[str]:
+        """ Returns the ids of all nodes representing a resource corresponding to a political orientation class. """
+        pol_orient_nodes = [node for node in self.get_custom_resources() if '_political_orientation_' in node]
+        return pol_orient_nodes
 
     def get_all_properties(self) -> Set[str]:
         """ Returns all properties used in the graph. """
@@ -195,7 +209,7 @@ class NewsKG(BaseGraph):
         target_nodes = [v for u, v, _ in self.get_edges(keys=True) if u==source_node]
         return set(target_nodes)
 
-    def remove_subjecs_for_property(self, prop: str) -> None:
+    def remove_subjects_for_property(self, prop: str) -> None:
         """ Removes all source nodes with an edge of type 'prop' from the graph. """
         remove_nodes = self.get_subjects_for_property(prop)
         self._remove_nodes(remove_nodes)
@@ -329,7 +343,7 @@ class NewsKG(BaseGraph):
             self._add_nodes(topic_ids)
 
             topics_nodes = [topics2node_ids[topic] for topic in data[self.data2include['topic']].tolist()]
-            self._add_simple_node_relation(source_nodes=news_node_ids, target_nodes=topics_nodes, property_type=self.predicates['subject'])
+            self._add_simple_node_relation(source_nodes=news_node_ids, target_nodes=topics_nodes, property_type=self.predicates['about'])
 
             if 'topic_label' in self.data2include.keys():
                 # preprocess entity data
@@ -378,14 +392,23 @@ class NewsKG(BaseGraph):
                 political_orientation_data = pd.read_csv(self.input_files['political_orientation'])
                 political_orientation_data = political_orientation_data.set_index(self.data2include['publisher'], drop=True)
                 outlet2pol_orient = political_orientation_data.to_dict('index')
+                pol_orient_unique = political_orientation_data[self.data2include['political_orientation']].unique().tolist()
                 
-                source_nodes = []
-                target_nodes = []
+                pol_orient2node_ids = dict()
+                for pol_orient in pol_orient_unique:
+                    pol_orient2node_ids[pol_orient] = self._news_id2node_id(pol_orient, prefix=self.node_prefix['outlet_political_orientation'])
+                pol_orient_ids = list(pol_orient2node_ids.values())
+                self._add_nodes(pol_orient_ids)
+                
+                publisher_nodes = []
+                pol_orient_nodes = []
                 for outlet in disambiguated_publishers.keys():
-                    source_nodes.append(disambiguated_publishers[outlet]['resource'])
-                    target_nodes.append(outlet2pol_orient[outlet]['political_orientation'])
-                
-                self._add_simple_node_relation(source_nodes=source_nodes, target_nodes=target_nodes, property_type=self.predicates['political_orientation'])
+                    publisher_nodes.append(disambiguated_publishers[outlet]['resource'])
+                    pol_orient_nodes.append(pol_orient2node_ids[outlet2pol_orient[outlet]['political_orientation']])
+                self._add_simple_node_relation(source_nodes=publisher_nodes, target_nodes=pol_orient_nodes, property_type=self.predicates['political_orientation'])
+
+                # literals
+                self._add_simple_node_relation(source_nodes=pol_orient_ids, target_nodes=pol_orient_unique, property_type=self.predicates['description'])
 
         # date information (e.g. data published and modified)
         if 'date_published' in self.data2include.keys():
@@ -403,8 +426,19 @@ class NewsKG(BaseGraph):
            
             # add sentiment annotations
             sentiment_news_indices = [self._node_id2news_idx(sentiment_data, node, prefix=self.node_prefix['news']) for node in news_node_ids]
-            sentiment_labels = [sentiment_data.loc[idx][self.data2include['sentiment']].values[0] for idx in sentiment_news_indices]
-            self._add_simple_node_relation(source_nodes=news_node_ids, target_nodes=sentiment_labels, property_type=self.predicates['sentiment'])
+            sentiment_labels = [sentiment_data.loc[idx][self.data2include['sentiment']].values[0].lower() for idx in sentiment_news_indices]
+            sentiment_labels_unique = list(set(sentiment_labels))  
+            sentiments2node_ids = dict()
+            for sentiment in sentiment_labels_unique:
+                sentiments2node_ids[sentiment] = self._news_id2node_id(sentiment, prefix=self.node_prefix['news_sentiment'])
+            sentiment_ids = list(sentiments2node_ids.values())
+            self._add_nodes(sentiment_ids)
+
+            sentiment_nodes = [sentiments2node_ids[sentiment_label] for sentiment_label in sentiment_labels]
+            self._add_simple_node_relation(source_nodes=news_node_ids, target_nodes=sentiment_nodes, property_type=self.predicates['sentiment'])
+
+            # literals
+            self._add_simple_node_relation(source_nodes=sentiment_nodes, target_nodes=sentiment_labels, property_type=self.predicates['description'])
 
         # author information
         if 'author' in self.data2include.keys():

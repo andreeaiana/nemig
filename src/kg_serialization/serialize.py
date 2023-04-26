@@ -79,8 +79,6 @@ class TriplesSerializer():
                     self.predicates['url'],
                     self.predicates['date_published'],
                     self.predicates['date_modified'],
-                    self.predicates['sentiment'],
-                    self.predicates['political_orientation']
                     ]
             lines = self._get_lines_instances_relations(properties)
             file = self.triples_files['instances_metadata_literals']
@@ -98,6 +96,18 @@ class TriplesSerializer():
             file = self.triples_files['instances_topic_mapping']
             self._write_lines_to_file(lines, file)
 
+        if 'instances_sentiment_mapping' in self.triples_to_serialize:
+            log.info('Serializing mapping of news to sentiment resources.')
+            lines = self._get_lines_instances_sentiment_mapping()
+            file = self.triples_files['instances_sentiment_mapping']
+            self._write_lines_to_file(lines, file)
+
+        if 'instances_political_orientation_mapping' in self.triples_to_serialize:
+            log.info('Serializing mapping of news outlets to political orientation resources.')
+            lines = self._get_lines_instances_political_orientation_mapping()
+            file = self.triples_files['instances_political_orientation_mapping']
+            self._write_lines_to_file(lines, file)
+
         if 'instances_content_literals' in self.triples_to_serialize:
             log.info('Serializing content literals.')
             properties = [
@@ -107,6 +117,15 @@ class TriplesSerializer():
                     ]
             lines = self._get_lines_instances_relations(properties)
             file = self.triples_files['instances_content_literals']
+            self._write_lines_to_file(lines, file)
+
+        if 'instances_sentiment_polorient_literals' in self.triples_to_serialize:
+            log.info('Serializing sentiment literals.')
+            properties = [
+                    self.predicates['description']
+                    ]
+            lines = self._get_lines_instances_relations(properties)
+            file = self.triples_files['instances_sentiment_polorient_literals']
             self._write_lines_to_file(lines, file)
 
         if 'instances_metadata_resources' in self.triples_to_serialize:
@@ -218,10 +237,6 @@ class TriplesSerializer():
             if content in content_nodes:
                 instance_content_mappings.append(self._as_object_triple(res, self.predicates['has_part'], content))
         
-        for res, content in self.graph.get_nodes_for_property(self.predicates['has_part']):
-            if content in content_nodes:
-                instance_content_mappings.append(self._as_object_triple(res, self.predicates['has_part'], content))
-
         return instance_content_mappings
 
     def _get_lines_instances_topic_mapping(self) -> List[str]:
@@ -229,11 +244,33 @@ class TriplesSerializer():
         topic_nodes = self.graph.get_topic_nodes()
 
         instance_topic_mappings = list()
-        for res, topic in self.graph.get_nodes_for_property(self.predicates['subject']):
+        for res, topic in self.graph.get_nodes_for_property(self.predicates['about']):
             if topic in topic_nodes:
-                instance_topic_mappings.append(self._as_object_triple(res, self.predicates['subject'], topic))
+                instance_topic_mappings.append(self._as_object_triple(res, self.predicates['about'], topic))
 
         return instance_topic_mappings
+
+    def _get_lines_instances_sentiment_mapping(self) -> List[str]:
+        """ Serialize sentiment mapping for news article resources. """
+        sentiment_nodes = self.graph.get_sentiment_nodes()
+
+        instance_sentiment_mappings = list()
+        for res, sentiment in self.graph.get_nodes_for_property(self.predicates['sentiment']):
+            if sentiment in sentiment_nodes:
+                instance_sentiment_mappings.append(self._as_object_triple(res, self.predicates['sentiment'], sentiment))
+
+        return instance_sentiment_mappings
+
+    def _get_lines_instances_political_orientation_mapping(self) -> List[str]:
+        """ Serialize political orientation mapping for news outlet resources. """
+        political_orientation_nodes = self.graph.get_pol_orient_nodes()
+
+        instance_pol_orient_mappings = list()
+        for res, pol_orient in self.graph.get_nodes_for_property(self.predicates['political_orientation']):
+            if pol_orient in political_orientation_nodes:
+                instance_pol_orient_mappings.append(self._as_object_triple(res, self.predicates['political_orientation'], pol_orient))
+
+        return instance_pol_orient_mappings
     
     def _get_lines_instances_event_mapping(self) -> List[str]:
         """ Serialize event mapping for news article resources. """

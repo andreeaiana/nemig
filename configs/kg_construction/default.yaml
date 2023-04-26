@@ -23,12 +23,12 @@ predicates:
   is_based_on: 'https://schema.org/isBasedOn'
   about: 'https://schema.org/about'
   mentions: 'https://schema.org/mentions'
-  subject: 'http://purl.org/dc/elements/1.1/subject'
   has_place: 'https://semanticweb.cs.vu.nl/2009/11/sem/hasPlace'
   has_actor: 'https://semanticweb.cs.vu.nl/2009/11/sem/hasActor'
   is_referenced_by: 'http://purl.org/dc/terms/isReferencedBy'
   sentiment: 'http://nemig_${language}.org/property/sentiment'
   political_orientation: 'http://nemig_${language}.org/property/political_orientation'
+  description: 'https://schema.org/description'
   type: 'https://www.w3.org/1999/02/22-rdf-syntax-ns#type'
   label: 'http://www.w3.org/2000/01/rdf-schema#label'
 
@@ -53,6 +53,8 @@ node_prefix:
   news_abstract: 'news_abstract_'
   news_body: 'news_body_'
   news_topic: 'news_topic_'
+  news_sentiment: 'news_sentiment_'
+  outlet_political_orientation: 'outlet_political_orientation_'
 
 data2include:
   id: ${dataset.id_col}
