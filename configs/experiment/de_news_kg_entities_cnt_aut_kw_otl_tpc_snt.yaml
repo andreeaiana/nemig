@@ -1,7 +1,7 @@
 # @package _global_
 
 # to execute this experiment run:
-# python main.py experiment=de_news_kg_complete
+# python main.py experiment=de_news_kg_entities
 
 defaults:
   - override /dataset: de_corpus.yaml
@@ -19,7 +19,7 @@ defaults:
 language: "de" 
 
 # name of the run determines folder name in logs
-name: "de_news_kg_complete"
+name: "de_news_kg_entities_cnt_aut_kw_otl_tpc_snt"
 
 entity_filtering:
   author_person_description:
@@ -42,23 +42,19 @@ entity_filtering:
     - Zeitung
 
 kg_construction:
-  graph_type: 'complete'
+  graph_type: 'entities'
   data2include:
     id: ${dataset.id_col}
     publisher: ${dataset.news_outlet_col}
-    url: ${dataset.provenance_col}
     author: ${dataset.author_col}
     author_org: ${dataset.author_org_col}
-    date_published: ${dataset.creation_date_col}
-    date_modified: ${dataset.last_modified_col}
     keywords: ${dataset.keywords_col}
     title: ${dataset.title_col}
     abstract: ${dataset.description_col}
     body: ${dataset.body_col}
     sentiment: ${sentiment_classification.sentiment_label_col}
-    political_orientation: 'political_orientation'
     topic: 'topic'
     topic_label: ${named_entity_recognition.columns2extract.topic_label} 
-
-kg_serialization:
-  description: 'The NeMigKG_de_complete is a knowledge graph built using a German news dataset collected from 40 media outlets and enriched with additional resources extracted from Wikidata.'
+  cache_files:
+    graph:
+      entities: ${cache_dir}/${language}/nemig_entities_cnt_aut_kw_otl_tpc_snt.pickle

@@ -276,7 +276,7 @@ class NewsKG(BaseGraph):
         
         log.info(f'Loading qid2attr mapping.')
         self.qid2attr = data_utils.load_cache(self.cache_files['wikidata']['qid2attr_map'])
-
+    
         if self.graph_type == 'base':
             self._construct_base_graph()
 

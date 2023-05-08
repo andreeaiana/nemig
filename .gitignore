@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+data/cache/en_old
+data/cache/de_old
+notebooks/
+logs/

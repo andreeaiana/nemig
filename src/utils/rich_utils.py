@@ -20,10 +20,10 @@ def print_config_tree(
     print_order: Sequence[str] = (
         "dataset",
         "sentiment_classification",
-#        "named_entity_recognition",
-#        "named_entity_linking",
-#        "kg_construction",
-        # "logger",
+        "named_entity_recognition",
+        "named_entity_linking",
+        "kg_construction",
+        "logger",
         "seed",
         "name"
     ),

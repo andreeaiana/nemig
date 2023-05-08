@@ -62,8 +62,8 @@ git clone https://github.com/andreeaiana/nemig
 cd nemig
 
 # [OPTIONAL] create conda environment
-conda create -n myenv python=3.9
-conda activate myenv
+conda create -n nemig_env python=3.9
+conda activate nemig_env
 
 # install requirements
 pip install -r requirements.txt
@@ -75,7 +75,7 @@ Download the mGENRE model as described in [mGENRE](https://github.com/facebookre
 Run pipeline with chosen experiment configuration from [configs/experiment/](configs/experiment/)
 
 ```bash
-python src/main.py experiment=experiment_name.yaml
+python main.py experiment=experiment_name.yaml
 ```
 
 You can override any parameter from command line like this
@@ -89,11 +89,9 @@ Run the [Subtopic Modelling notebook](notebooks/1.0-subtopic-modeling-en.ipynb) 
 The chosen version of NeMig will be constructed and cached in the [cache folder](data/cache/). NeMigKG is serialized in N-Triple format, and the resulting files are placed in the [kg folder](data/kg/).
 
 ## Data
-A sample of the annotated news corpora used to construct the knowledge graphs are available in the [cache folder](data/cache). Due to copyright policies, this sample does not contain the body of the articles.
+A sample of the annotated news corpora used to construct the knowledge graphs are available in the [cache folder](data/cache). Due to copyright policies, this sample does not contain the body of the articles. A full version of the news corpus is available [upon request](mailto:andreea.iana@uni-mannheim.de).
 
-The anonymized user data and the associated subset of the German corpora are available in the [news-recommendation folder](data/news_recommendation/).
-
-A full version of the news corpus is available [upon request](mailto:andreea.iana@uni-mannheim.de).
+The anonymized user data for each dataset is available in the [user data folder](data/user_data/).
 
 ## KG Triples
 [NeMigKG](https://doi.org/10.5281/zenodo.7442425) is hosted on [Zenodo](https://zenodo.org/). All files are [gzipped](https://www.gzip.org/) and in [N-Triples format](https://www.w3.org/TR/n-triples/). 

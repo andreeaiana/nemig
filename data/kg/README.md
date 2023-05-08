@@ -10,10 +10,13 @@ The samples available here contain the complete NeMigKG without the bodies of th
 | nemig_${language}_ ${graph_type}-instances_types.nt.bz2    |    Class definitions of news and event instances.
 | nemig_${language}_ ${graph_type}-instances_labels.nt.bz2    |    Labels of instances.
 | nemig_${language}_ ${graph_type}-instances_related.nt.bz2    |    Relations between news instances based on one another.
-| nemig_${language}_ ${graph_type}-instances_metadata_literals.nt.bz2    |    Relations between news instances and metadata literals (e.g. URL, publishing date, modification date, sentiment label, political orientation of news outlets).
+| nemig_${language}_ ${graph_type}-instances_metadata_literals.nt.bz2    |    Relations between news instances and metadata literals (e.g. URL, publishing date, modification date).
 | nemig_${language}_ ${graph_type}-instances_content_mapping.nt.bz2    |    Mapping of news instances to content instances (e.g. title, abstract, body).
 | nemig_${language}_ ${graph_type}-instances_topic_mapping.nt.bz2    |    Mapping of news instances to sub-topic instances.
+| nemig_${language}_ ${graph_type}-instances_sentiment_mapping.nt.bz2    |    Mapping of news instances to sentiment classes.
+| nemig_${language}_ ${graph_type}-instances_political_orientation_mapping.nt.bz2    |    Mapping of news outlets instances to political orientation classes.
 | nemig_${language}_ ${graph_type}-instances_content_literals.nt.bz2    |    Relations between content instances and corresponding literals (e.g. text of title, abstract, body).
+| nemig_${language}_ ${graph_type}-instances_sentiment_polorient_literals.nt.bz2    |    Relations between instances and corresponding sentiment or political orientation literals.
 | nemig_${language}_ ${graph_type}-instances_metadata_resources.nt.bz2    |    Relations between news or sub-topic instances and entities extracted from metadata (i.e. publishers, authors, keywords).
 | nemig_${language}_ ${graph_type}-instances_event_mapping.nt.bz2    |    Mapping of news instances to event instances.
 | nemig_${language}_ ${graph_type}-event_resources.nt.bz2    |    Relations between event instances and entities extracted from the text of the news (i.e. actors, places, mentions).
