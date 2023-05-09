@@ -3,7 +3,7 @@
 ## Dataset Format 
 NeMigKG is serialized as [gzipped](https://www.gzip.org/) files in [N-Triples](https://www.w3.org/TR/n-triples/) format, and available under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
 
-The samples available here contain the complete NeMigKG without the bodies of the news. The complete data dump can be downloaded from [Zenodo](https://doi.org/10.5281/zenodo.7442425).
+The samples available here contain the complete NeMigKG without the bodies of the news. The complete data dump can be downloaded from [Zenodo](https://doi.org/10.5281/zenodo.7442424).
 
 A description of the files is provided in the table below:
 

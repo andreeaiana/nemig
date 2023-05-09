@@ -94,7 +94,7 @@ A sample of the annotated news corpora used to construct the knowledge graphs ar
 The anonymized user data for each dataset is available in the [user data folder](data/user_data/).
 
 ## KG Triples
-[NeMigKG](https://doi.org/10.5281/zenodo.7442425) is hosted on [Zenodo](https://zenodo.org/). All files are [gzipped](https://www.gzip.org/) and in [N-Triples format](https://www.w3.org/TR/n-triples/). 
+[NeMigKG](https://doi.org/10.5281/zenodo.7442424) is hosted on [Zenodo](https://zenodo.org/). All files are [gzipped](https://www.gzip.org/) and in [N-Triples format](https://www.w3.org/TR/n-triples/). 
 
 A sample of the triple files for can be found in the [kg folder](data/kg/). Due to copyright policies, these samples do not contain the body of the news articles.
 
