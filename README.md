@@ -121,7 +121,7 @@ If you use the dataset, please cite:
   year         = 2022,
   publisher    = {Zenodo},
   version      = {v1.0.1},
-  doi          = {10.5281/zenodo.7908392},
-  url          = {https://doi.org/10.5281/zenodo.7908392}
+  doi          = {10.5281/zenodo.7442424},
+  url          = {https://doi.org/10.5281/zenodo.7442424}
 }
 ```
