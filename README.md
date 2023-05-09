@@ -1,13 +1,13 @@
 # NeMig
-NeMig represents a bilingual news collection and knowledge graphs on the topic of migration. The news corpora in German and English were collected from online media outlets from Germany and the US, respectively. NeMIg contains rich textual and metadata information, sub-topics and sentiment annotations, as well as named entities extracted from the articles' content and metadata and linked to Wikidata. The corresponding knowledge graphs built from each corpus are expanded with up to two-hop neighbors from Wikidata of the initial set of linked entities.
+NeMig represents a bilingual news collection and knowledge graphs on the topic of migration. The news corpora in German and English were collected from online media outlets from Germany and the US, respectively. NeMIg contains rich textual and metadata information, sentiment and political orientation annotations, as well as named entities extracted from the articles' content and metadata and linked to Wikidata. The corresponding knowledge graphs (NeMigKG) built from each corpus are expanded with up to two-hop neighbors from Wikidata of the initial set of linked entities.
 
 ## Features
-NeMig comes in four flavors, for both the German, and the English corpora:
+NeMigKG comes in four flavors, for both the German, and the English corpora:
 
-- **Base NeMig**: contains literals and entities from the corresponding annotated news corpus;
-- **Entities NeMig**: derived from the Base NeMIg by removing all literal nodes, it contains only resource nodes;
-- **Enriched Entities NeMig**: derived from the Entities NeMig by enriching it with up to two-hop neighbors from Wikidata, it contains only resource nodes and Wikidata triples;
-- **Complete NeMig**: the combination of the Base and Enriched Entities NeMig, it contains both literals and resources.
+- **Base NeMigKG**: contains literals and entities from the corresponding annotated news corpus;
+- **Entities NeMigKG**: derived from the Base NeMIg by removing all literal nodes, it contains only resource nodes;
+- **Enriched Entities NeMigKG**: derived from the Entities NeMig by enriching it with up to two-hop neighbors from Wikidata, it contains only resource nodes and Wikidata triples;
+- **Complete NeMigKG**: the combination of the Base and Enriched Entities NeMig, it contains both literals and resources.
 
 ## Project Structure
 
@@ -102,3 +102,26 @@ A sample of the triple files for can be found in the [kg folder](data/kg/). Due 
 ## License
 The code is licensed under the MIT License. The data files are licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
+## Citation
+If you use the dataset, please cite:
+
+```
+@dataset{iana_andreea_2022_7908392,
+  author       = {Iana, Andreea and
+                  Alam, Mehwish and
+                  Grote, Alexander and
+                  Nikolajevic, Nevena and
+                  Ludwig, Katharina and
+                  Müller, Philipp and
+                  Weinhardt, Christof and
+                  Paulheim, Heiko},
+  title        = {{NeMig - A Bilingual News Collection and Knowledge 
+                   Graph about Migration}},
+  month        = dec,
+  year         = 2022,
+  publisher    = {Zenodo},
+  version      = {v1.0.1},
+  doi          = {10.5281/zenodo.7908392},
+  url          = {https://doi.org/10.5281/zenodo.7908392}
+}
+```
