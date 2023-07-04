@@ -15,5 +15,5 @@ stanza==1.2
 titlecase==2.3
 torch==1.11.0
 tqdm==4.62.2
-transformers==4.24.0
+transformers==4.30.0
 validators==0.18.2
