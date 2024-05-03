@@ -14,6 +14,6 @@ rich==12.6.0
 stanza==1.2
 titlecase==2.3
 torch==1.13.1
-tqdm==4.62.2
+tqdm==4.66.3
 transformers==4.30.0
 validators==0.18.2
